@@ -2,30 +2,55 @@ __author__ = 'arian'
 import libtorrent as lt
 import time
 import os
+import threading
 
-link = raw_input("input your magnet: ")
-ses = lt.session()
-ses.listen_on(6881, 6891)
-params = {
-    'save_path': os.getcwd()+'/',
-    'storage_mode': lt.storage_mode_t(2),
-    'paused': False,
-    'auto_managed': True,
-    'duplicate_is_error': True}
+
+class Client:
+    def __init__(self):
+        #link = raw_input("input your magnet: ")
+        self.threads=[]
+        self.ses = lt.session()
+        self.ses.listen_on(6881, 6891)
+        if not os.path.exists(os.getcwd()+'/downloads'):
+            os.mkdir(os.getcwd()+'/downloads')
+        self.params = {
+            'save_path': os.getcwd()+'/downloads/',
+            'storage_mode': lt.storage_mode_t(2),
+            'paused': False,
+            'auto_managed': True,
+            'duplicate_is_error': True}
+
 #link = "magnet:?xt=urn:btih:4MR6HU7SIHXAXQQFXFJTNLTYSREDR5EI&tr=http://tracker.vodo.net:6970/announce"
-handle = lt.add_magnet_uri(ses, link, params)
-ses.start_dht()
+    def add_torrent(self,magnet,name):
+        new_thread = threading.Thread(target=self.download,args=(magnet,name))
+        new_thread.start()
+        self.threads.append(new_thread)
 
-print 'downloading metadata...'
-while (not handle.has_metadata()):
-    time.sleep(1)
-print 'got metadata, starting torrent download...'
-while (handle.status().state != lt.torrent_status.seeding):
-    s = handle.status()
+
+    def download(self,link,name):
+        handle = lt.add_magnet_uri(self.ses, link, self.params)
+        self.ses.start_dht()
+        print 'downloading metadata...'
+        while (not handle.has_metadata()):
+            time.sleep(1)
+        print 'got metadata, starting torrent download...'
+        while (handle.status().state != lt.torrent_status.seeding):
+            s = handle.status()
     #print help(s)
-    state_str = ['queued', 'checking', 'downloading metadata', \
+            state_str = ['queued', 'checking', 'downloading metadata', \
                 'downloading', 'finished', 'seeding', 'allocating']
-    print '%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
+            print name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                 (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                 s.num_peers, state_str[s.state], s.total_download/1000000)
-    time.sleep(5)
+        time.sleep(5)
+
+
+client = Client()
+magnet = raw_input("input your magnet: ")
+name = raw_input("input your magnet's name: ")
+while magnet:
+    client.add_torrent(magnet,name)
+    magnet = raw_input("input your magnet: ")
+    name = raw_input("input your magnet's name: ")
+for i in client.threads:
+    i.join()
