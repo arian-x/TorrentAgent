@@ -22,7 +22,7 @@ while (not handle.has_metadata()):
 print 'got metadata, starting torrent download...'
 while (handle.status().state != lt.torrent_status.seeding):
     s = handle.status()
-    print s.name
+    print help(s)
     state_str = ['queued', 'checking', 'downloading metadata', \
                 'downloading', 'finished', 'seeding', 'allocating']
     print '%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
