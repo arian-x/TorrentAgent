@@ -11,7 +11,7 @@ class Scrape:
         res = urllib.urlopen(link)
         print "got the response"
         print res
-        soup = BeautifulSoup(res)
+        soup = BeautifulSoup(res.read())
         names = soup.findAll('a',{'class':'cellMainLink'})
         magnets = soup.findAll('a',{'class':'imagnet icon16 askFeedbackjs'})
         print names
