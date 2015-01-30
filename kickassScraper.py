@@ -10,6 +10,7 @@ class Scrape:
         print "sending req"
         res = urllib.urlopen(link)
         print "got the response"
+        print res
         soup = BeautifulSoup(res)
         names = soup.findAll('a',{'class':'cellMainLink'})
         magnets = soup.findAll('a',{'class':'imagnet icon16 askFeedbackjs'})
