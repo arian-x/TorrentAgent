@@ -8,7 +8,7 @@ import urllib2
 class Scrape:
     def __init__(self,link):
         print "sending req"
-        res = urllib.urlopen(link)
+        res = urllib2.urlopen(link)
         print "got the response"
         print res
         soup = BeautifulSoup(res.read())
