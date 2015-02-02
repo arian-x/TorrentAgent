@@ -4,7 +4,6 @@ __author__ = 'arian'
 #import urllib2
 #import cookielib
 from urllib.request import urlopen
-import os
 
 
 class Scrape:
@@ -18,13 +17,10 @@ class Scrape:
         #res = opener.open(link)
 #        res = urllib.request.urlopen("https://kickass.so/search/1080p%20category:xxx/")
 
-        html = (urlopen("https://kickass.so/").read())
-        f = open(os.getcwd()+"/htmlofit.txt",'wb')
-        f.write(html)
-        f.close()
-
-        print(html)
-        print(type(html))
+        html = urlopen("https://kickass.so/").read()
+        decoded_str = html.decode("utf8")
+        encoded_str = decoded_str.encode("utf8")
+        print(encoded_str)
 #        print("got the response")
         #print res
         #soup = BeautifulSoup(res.read())
