@@ -18,6 +18,7 @@ class Scrape:
 #        res = urllib.request.urlopen("https://kickass.so/search/1080p%20category:xxx/")
 
         html = str(urlopen("https://kickass.so/").read())
+
         print(html)
 #        print("got the response")
         #print res
