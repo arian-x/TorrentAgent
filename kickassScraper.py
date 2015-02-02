@@ -20,6 +20,7 @@ class Scrape:
         html = str(urlopen("https://kickass.so/").read())
 
         print(html)
+        print(type(html))
 #        print("got the response")
         #print res
         #soup = BeautifulSoup(res.read())
