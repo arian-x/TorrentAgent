@@ -17,8 +17,8 @@ class Scrape:
         #res = opener.open(link)
 #        res = urllib.request.urlopen("https://kickass.so/search/1080p%20category:xxx/")
 
-        html = urlopen("https://kickass.so/search/1080p%20category:xxx/")
-        print(unicode(html.read()))
+        html = urlopen("https://kickass.so/")
+        print(html.read())
 #        print("got the response")
         #print res
         #soup = BeautifulSoup(res.read())
