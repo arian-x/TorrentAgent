@@ -19,7 +19,7 @@ class Scrape:
 #        res = urllib.request.urlopen("https://kickass.so/search/1080p%20category:xxx/")
 
         html = (urlopen("https://kickass.so/").read())
-        f = open(os.getcwd()+"/htmlofit.html",'wb')
+        f = open(os.getcwd()+"/htmlofit.txt",'wb')
         f.write(html)
         f.close()
 
