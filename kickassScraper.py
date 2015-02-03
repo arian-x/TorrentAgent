@@ -4,9 +4,9 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 class Scrape:
-    def __init__(self):
+    def __init__(self,link):
         self.driver = webdriver.Firefox()
-
+        self.scrape(link)
     def scrape(self,link):
         self.driver.get(link)
         self.name_elems = self.driver.find_elements_by_class_name("cellMainLink")
