@@ -11,10 +11,10 @@ class Scrape:
         self.driver.get(link)
         self.name_elems = self.driver.find_elements_by_class_name("cellMainLink")
         self.magnet_elems = self.driver.find_elements_by_class_name("imagnet")
-        names = [i.text for i in self.name_elems]
-        print names
+        names = [i.get_attribute('text') for i in self.name_elems]
+       # print names
         magnets = [i.get_attribute("href") for i in self.magnet_elems]
-        print magnets
+       # print magnets
         self.name_mag_dict = {}
         for index,i in enumerate(names):
             self.name_mag_dict[i] = magnets[index]
