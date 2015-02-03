@@ -1,36 +1,22 @@
 __author__ = 'arian'
 #from BeautifulSoup import BeautifulSoup
-#import urllib
-#import urllib2
-#import cookielib
-from urllib.request import urlopen
-
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 class Scrape:
-    def __init__(self,link):
-        #cj = cookielib.CookieJar()
-        #opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        #opener.add_handler([('User-agent', "Magic Browser")])
-        #urllib2.install_opener(opener)
+    def __init__(self):
+        self.driver = webdriver.Firefox()
 
-        print("sending req")
-        #res = opener.open(link)
-#        res = urllib.request.urlopen("https://kickass.so/search/1080p%20category:xxx/")
-
-        html = urlopen("https://kickass.so/").read()
-        decoded_str = html.decode("utf8")
-        encoded_str = decoded_str.encode("utf8")
-        print(encoded_str)
-#        print("got the response")
-        #print res
-        #soup = BeautifulSoup(res.read())
-        #names = soup.findAll('a',{'class':'cellMainLink'})
-        #magnets = soup.findAll('a',{'class':'imagnet icon16 askFeedbackjs'})
-        #print names
-        #print magnets
-
-
-
+    def scrape(self,link):
+        self.driver.get(link)
+        self.name_elems = self.driver.find_elements_by_class_name("cellMainLink")
+        self.magnet_elems = self.driver.find_elements_by_class_name("imagnet")
+        names = [i.text for i in self.name_elems]
+        magnets = [i.get_attribute("href") for i in self.magnet_elems]
+        self.name_mag_dict = {}
+        for index,i in enumerate(names):
+            self.name_mag_dict[i] =magnets[index]
+        print self.name_mag_dict
 
 
 
