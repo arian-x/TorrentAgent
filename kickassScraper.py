@@ -21,6 +21,5 @@ class Scrape:
         print self.name_mag_dict
 
 
-
 scp = Scrape("https://kickass.so/search/1080p%20category:xxx/")
 

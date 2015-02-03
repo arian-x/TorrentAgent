@@ -5,7 +5,7 @@ import os
 import threading
 
 
-class Client:
+class Torrent_Client:
     def __init__(self):
         #link = raw_input("input your magnet: ")
         self.threads=[]
@@ -22,12 +22,14 @@ class Client:
 
 #link = "magnet:?xt=urn:btih:4MR6HU7SIHXAXQQFXFJTNLTYSREDR5EI&tr=http://tracker.vodo.net:6970/announce"
     def add_torrent(self,magnet,name):
-        new_thread = threading.Thread(target=self.download,args=(magnet,name))
-        new_thread.start()
+        #new_thread = threading.Thread(target=self.download,args=(magnet,name))
+        new_thread = MyThread(self.download,args=(magnet,name),name=name)
+        #new_thread.start()
         self.threads.append(new_thread)
 
 
-    def download(self,link,name):
+
+    def download(self,link,name,parent):
         handle = lt.add_magnet_uri(self.ses, link, self.params)
         self.ses.start_dht()
         print 'downloading metadata...'
@@ -39,18 +41,33 @@ class Client:
     #print help(s)
             state_str = ['queued', 'checking', 'downloading metadata', \
                 'downloading', 'finished', 'seeding', 'allocating']
-            print name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
+            parent.info =  name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                 (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                 s.num_peers, state_str[s.state], s.total_download/1000000)
         time.sleep(5)
+class MyThread(threading.Thread):
+    def __init__(self,func,args,name=''):
+        threading.Thread.__init__(self)
+        self.name = name
+        self.func = func
+        self.args = args
+        print "args are:",self.args
+        self.info = None
+    def run(self):
+        self.func(*self.args)
+    def get_info(self):
+        return self.info
 
 
-client = Client()
+
+client = Torrent_Client()
 magnet = raw_input("input your magnet: ")
 name = raw_input("input your magnet's name: ")
-while magnet:
-    client.add_torrent(magnet,name)
-    magnet = raw_input("input your magnet: ")
-    name = raw_input("input your magnet's name: ")
-for i in client.threads:
-    i.join()
+client.add_torrent(magnet,name)
+
+# while magnet:
+#     client.add_torrent(magnet,name)
+#     magnet = raw_input("input your magnet: ")
+#     name = raw_input("input your magnet's name: ")
+# for i in client.threads:
+#     i.join()
