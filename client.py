@@ -24,7 +24,7 @@ class Torrent_Client:
     def add_torrent(self,magnet,name):
         #new_thread = threading.Thread(target=self.download,args=(magnet,name))
         new_thread = MyThread(self.download,args=(magnet,name),name=name)
-        #new_thread.start()
+        new_thread.start()
         self.threads.append(new_thread)
 
 
@@ -44,15 +44,21 @@ class Torrent_Client:
             parent.info =  name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                 (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                 s.num_peers, state_str[s.state], s.total_download/1000000)
-        time.sleep(5)
+        #time.sleep(5)
+    def get_info(self):
+        infos = []
+        for i in self.threads:
+            infos.append(i.get_info())
+        return infos
+
 class MyThread(threading.Thread):
     def __init__(self,func,args,name=''):
         threading.Thread.__init__(self)
         self.name = name
         self.func = func
-        self.args = args
+        self.args = args + (self,)
         print "args are:",self.args
-        self.info = None
+        self.info = ''
     def run(self):
         self.func(*self.args)
     def get_info(self):
@@ -65,9 +71,14 @@ magnet = raw_input("input your magnet: ")
 name = raw_input("input your magnet's name: ")
 client.add_torrent(magnet,name)
 
+
 # while magnet:
 #     client.add_torrent(magnet,name)
 #     magnet = raw_input("input your magnet: ")
 #     name = raw_input("input your magnet's name: ")
 # for i in client.threads:
 #     i.join()
+for i in range(10):
+    time.sleep(4)
+    print client.get_info()
+
