@@ -41,10 +41,16 @@ class Torrent_Client:
     #print help(s)
             state_str = ['queued', 'checking', 'downloading metadata', \
                 'downloading', 'finished', 'seeding', 'allocating']
+            parent.state = state_str[s.state]
             parent.info =  name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                 (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                 s.num_peers, state_str[s.state], s.total_download/1000000)
         #time.sleep(5)
+    def controler(self):
+        while True:
+            for i in self.threads:
+                i.join()
+                print "torrent finished"
     def get_info(self):
         infos = []
         for i in self.threads:
@@ -57,6 +63,7 @@ class MyThread(threading.Thread):
         self.name = name
         self.func = func
         self.args = args + (self,)
+        self.state = ''
         print "args are:",self.args
         self.info = ''
     def run(self):
