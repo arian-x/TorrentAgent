@@ -21,5 +21,5 @@ class Scrape:
         print self.name_mag_dict
 
 
-scp = Scrape("https://kickass.so/search/alfred with license")
+scp = Scrape("https://kickass.so/search/archer")
 
