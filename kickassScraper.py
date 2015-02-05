@@ -13,10 +13,15 @@ class Scrape:
         #self.magnet_elems = self.driver.find_elements_by_class_name("imagnet")
         soup = BeautifulSoup(content)
         self.name_elems = soup.findAll('a',{'class':"cellMainLink"})
-        self.magnet_elems = soup.findAll('a',{'class':"imagnet icon16 askFeedbackjs"})
+        self.magnet_elems = soup.findAll('a',{'class':"imagnet icon16"})
         print len(self.name_elems)
         print len(self.magnet_elems)
-        names = [i.string for i in self.name_elems]
+        names = []
+        for i in self.name_elems:
+            name =""
+            for j in i.contents:
+                name = name + ' ' + j.string
+            names.append(name)
        # print names
         magnets = [i.get("href") for i in self.magnet_elems]
        # print magnets
