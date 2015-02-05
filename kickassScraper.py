@@ -5,6 +5,7 @@ from selenium import webdriver
 class Scrape:
     def __init__(self,link):
         self.driver = webdriver.Firefox()
+        print "here"
         self.scrape(link)
     def scrape(self,link):
         self.driver.get(link)
