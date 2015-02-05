@@ -1,7 +1,6 @@
 __author__ = 'arian'
 #from BeautifulSoup import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 class Scrape:
     def __init__(self,link):
@@ -9,6 +8,7 @@ class Scrape:
         self.scrape(link)
     def scrape(self,link):
         self.driver.get(link)
+        print "here"
         self.name_elems = self.driver.find_elements_by_class_name("cellMainLink")
         self.magnet_elems = self.driver.find_elements_by_class_name("imagnet")
         names = [i.get_attribute('text') for i in self.name_elems]
