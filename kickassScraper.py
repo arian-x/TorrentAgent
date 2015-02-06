@@ -28,8 +28,8 @@ class Scrape:
         self.name_mag_dict = {}
         for index,i in enumerate(names):
             self.name_mag_dict[i] = magnets[index]
-        print self.name_mag_dict
+        return self.name_mag_dict
 
 
-scp = Scrape("https://kickass.so/search/archer")
+#scp = Scrape("https://kickass.so/search/archer")
 
