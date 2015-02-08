@@ -6,8 +6,9 @@ import threading
 
 
 class Torrent_Client:
-    def __init__(self):
+    def __init__(self,socketio):
         #link = raw_input("input your magnet: ")
+        self.socketio = socketio
         self.threads=[]
         self.ses = lt.session()
         self.ses.listen_on(6881, 6891)
@@ -45,17 +46,8 @@ class Torrent_Client:
             parent.info =  name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                 (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                 s.num_peers, state_str[s.state], s.total_download/1000000)
+            self.socketio.emit('newinfo',{'info':parent.info},namespace='/test')
         #time.sleep(5)
-    def controler(self):
-        while True:
-            for i in self.threads:
-                i.join()
-                print "torrent finished"
-    def get_info(self):
-        infos = []
-        for i in self.threads:
-            infos.append(i.get_info())
-        return infos
 
 class MyThread(threading.Thread):
     def __init__(self,func,args,name=''):
@@ -73,10 +65,10 @@ class MyThread(threading.Thread):
 
 
 
-client = Torrent_Client()
-magnet = raw_input("input your magnet: ")
-name = raw_input("input your magnet's name: ")
-client.add_torrent(magnet,name)
+#client = Torrent_Client()
+#magnet = raw_input("input your magnet: ")
+#name = raw_input("input your magnet's name: ")
+#client.add_torrent(magnet,name)
 
 
 # while magnet:
@@ -85,7 +77,7 @@ client.add_torrent(magnet,name)
 #     name = raw_input("input your magnet's name: ")
 # for i in client.threads:
 #     i.join()
-for i in range(10):
-    time.sleep(4)
-    print client.get_info()
+#for i in range(10):
+#    time.sleep(4)
+#    print client.get_info()
 
