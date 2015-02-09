@@ -40,11 +40,11 @@ class Torrent_Client:
             time.sleep(1)
             waittime += 1
             print "waiting:",waittime
-            if waittime == 20:
+            if waittime == 60:
                 break
 
 
-        if waittime < 20:
+        if waittime < 60:
             print 'got metadata, starting torrent download...'
             while (handle.status().state != lt.torrent_status.seeding):
                 s = handle.status()
