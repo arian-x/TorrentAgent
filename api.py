@@ -45,7 +45,8 @@ def scrape():
     text = request.args.get("text")
     print text
     scraper = kickassScraper.Scrape(text)
-    return scraper
+    out = scraper.scrape(scraper.link)
+    return out
 class RandomThread(Thread):
     def __self__(self):
         super(RandomThread,self).__init__()

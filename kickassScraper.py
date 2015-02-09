@@ -5,7 +5,7 @@ import requests
 class Scrape:
     def __init__(self,link):
         #res = requests.get(link,verify=False)
-        self.scrape(link)
+        self.link = link
     def scrape(self,link):
         res = requests.get(link,verify=False)
         content = res.content
