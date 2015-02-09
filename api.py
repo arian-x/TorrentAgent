@@ -45,6 +45,7 @@ def scrape():
     text = request.args.get("text")
     print text
     scraper = kickassScraper.Scrape(text)
+    print "here is right"
     out = scraper.scrape(scraper.link)
     print "out is",out
     return out
