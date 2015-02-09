@@ -43,6 +43,7 @@ def test_connect():
 @app.route("/scrape")
 def scrape():
     text = request.args.get("text")
+    print text
     scraper = kickassScraper.Scrape(text)
     return scraper
 class RandomThread(Thread):
