@@ -62,5 +62,5 @@ class RandomThread(Thread):
 
 
 if __name__ == "__main__":
-    socketio.run(app,host="178.18.25.151",port=8070)
+    socketio.run(app,host="178.18.25.151",port=8070,debug=True)
     #app.run()
