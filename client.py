@@ -39,6 +39,7 @@ class Torrent_Client:
         while (not handle.has_metadata()):
             time.sleep(1)
             waittime += 1
+            print "waiting:",waittime
             if waittime == 10:
                 break
 
