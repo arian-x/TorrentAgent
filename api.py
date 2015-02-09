@@ -24,7 +24,7 @@ def download():
     global Client
     magnet = request.args.get("mag")
     Client.add_torrent(magnet,"test")
-    #return magnet
+    return "OK!"
 @socketio.on('connect',namespace='/test')
 def test_connect():
     #global thread
