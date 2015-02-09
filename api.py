@@ -46,7 +46,7 @@ def scrape():
     print text
     scraper = kickassScraper.Scrape(text)
     out = scraper.scrape(scraper.link)
-    print out
+    print "out is",out
     return out
 class RandomThread(Thread):
     def __self__(self):
