@@ -4,7 +4,7 @@ from flask.ext.socketio import SocketIO,emit
 from threading import *
 import random
 import time
-import client
+#import client
 thread = Thread()
 thread_stop_event = Event()
 import kickassScraper
@@ -13,7 +13,7 @@ import os
 app = Flask(__name__,static_url_path=os.getcwd()+"/static")
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-Client = client.Torrent_Client(socketio)
+#Client = client.Torrent_Client(socketio)
 @app.route("/")
 def index():
     #return redirect(url_for('static', filename='index.html'))
@@ -23,7 +23,7 @@ def index():
 def download():
     global Client
     magnet = request.args.get("mag")
-    Client.add_torrent(magnet,"test")
+    #Client.add_torrent(magnet,"test")
     #return magnet
 @socketio.on('connect',namespace='/test')
 def test_connect():
@@ -60,5 +60,5 @@ class RandomThread(Thread):
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app,host="178.18.25.151",port=8070)
     #app.run()
