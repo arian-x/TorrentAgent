@@ -38,4 +38,4 @@ def func(magnet,socketio):
             #socketio.emit('newinfo',{'info':info},namespace='/test')
         #time.sleep(5)
 
-func("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337")
+func("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337",None)
