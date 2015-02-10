@@ -42,7 +42,7 @@ def test_connect():
 
 @app.route("/scrape")
 def scrape():
-    tt = "https://kickass.so/search/"
+    tt = "https://kickass.to/search/"
     text = request.args.get("text")
     print text
     scraper = kickassScraper.Scrape(tt+text)
