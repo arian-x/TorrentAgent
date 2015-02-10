@@ -2,7 +2,7 @@ __author__ = 'arian'
 import libtorrent as lt
 import time
 import os
-def func(magnet):
+def func(magnet,socketio):
     ses = lt.session()
     ses.listen_on(6881, 6891)
     if not os.path.exists(os.getcwd()+'/downloads'):
@@ -37,4 +37,4 @@ def func(magnet):
             print info
         #time.sleep(5)
 
-func("magnet:?xt=urn:btih:F90A026EFC451B2C714991D7D4D60E88682490B3&dn=american+heist+2014+1080p+brrip+x264+yify&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce")
+#func("magnet:?xt=urn:btih:F90A026EFC451B2C714991D7D4D60E88682490B3&dn=american+heist+2014+1080p+brrip+x264+yify&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce")

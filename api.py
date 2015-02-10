@@ -6,6 +6,7 @@ from threading import *
 import random
 import time
 import client
+import test
 thread = Thread()
 thread_stop_event = Event()
 import kickassScraper
@@ -22,9 +23,11 @@ def index():
 
 @app.route("/download")
 def download():
-    global Client
+    #global Client
     magnet = request.args.get("mag")
-    Client.add_torrent(magnet,"test")
+    #Client.add_torrent(magnet,"test")
+    thread = MyThread(test.func,args=(magnet,socketio),name="test")
+    thread.start()
     return "OK!"
 @socketio.on('connect',namespace='/test')
 def test_connect():
@@ -51,6 +54,18 @@ def scrape():
     out = scraper.scrape(scraper.link)
     #print "out is",out
     return json.dumps(out)
+class MyThread(Thread):
+    def __init__(self,func,args,name=''):
+        Thread.__init__(self)
+        self.name = name
+        self.func = func
+        self.args = args
+        print "args are:",self.args
+        self.info = ''
+    def run(self):
+        self.func(*self.args)
+    def get_info(self):
+        return self.info
 
 class RandomThread(Thread):
     def __self__(self):
