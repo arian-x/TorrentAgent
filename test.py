@@ -35,7 +35,7 @@ def func(magnet,socketio):
                    (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                     s.num_peers, state_str[s.state], s.total_download/1000000)
             print info
-            socketio.emit('newinfo',{'info':info},namespace='/test')
+            #socketio.emit('newinfo',{'info':info},namespace='/test')
         #time.sleep(5)
 
-#func("magnet:?xt=urn:btih:F90A026EFC451B2C714991D7D4D60E88682490B3&dn=american+heist+2014+1080p+brrip+x264+yify&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce")
+func("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337")
