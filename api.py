@@ -28,10 +28,10 @@ import kickassScraper
 import os
 app = Flask(__name__,static_url_path=os.getcwd()+"/static")
 app.config['SECRET_KEY'] = 'secret!'
-#app.config.update(
-#    CELERY_BROKER_URL='redis://localhost:6379',
-#    CELERY_RESULT_BACKEND='redis://localhost:6379'
-#)
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
 celery = make_celery(app)
 socketio = SocketIO(app)
 Client = client.Torrent_Client(socketio)
