@@ -79,7 +79,9 @@ def func(magnet,socketio):
 @app.route("/download")
 def download():
     #global Client
+
     magnet = request.args.get("mag")
+    print magnet
     #Client.add_torrent(magnet,"test")
     #func(magnet,socketio)
     res = func.delay(magnet,socketio)
