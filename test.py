@@ -38,4 +38,19 @@ def func(magnet,socketio):
             #socketio.emit('newinfo',{'info':info},namespace='/test')
         #time.sleep(5)
 
-func("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337",None)
+class MyThread(Thread):
+    def __init__(self,func,args,name=''):
+        Thread.__init__(self)
+        self.name = name
+        self.func = func
+        self.args = args
+        print "args are:",self.args
+        self.info = ''
+    def run(self):
+        self.func(*self.args)
+    def get_info(self):
+        return self.info
+thread = MyThread(func,args=("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337",None),name='test')
+thread.start()
+
+#func("magnet:?xt=urn:btih:A35B445EEEB0A4304C25C2AE25FA3A264822FFD8&dn=the+rewrite+2014+720p+brrip+x264+yify&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337",None)
