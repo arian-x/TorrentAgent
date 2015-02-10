@@ -26,8 +26,10 @@ def download():
     #global Client
     magnet = request.args.get("mag")
     #Client.add_torrent(magnet,"test")
-    thread = MyThread(test.func,args=(magnet,socketio),name="test")
-    thread.start()
+    test.func(magnet,socketio)
+    #thread = MyThread(test.func,args=(magnet,socketio),name="test")
+    #thread.start()
+    #thread.join()
     return "OK!"
 @socketio.on('connect',namespace='/test')
 def test_connect():
