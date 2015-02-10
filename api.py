@@ -1,6 +1,7 @@
 __author__ = 'arian'
 from flask import Flask,request,url_for,redirect,render_template
 from flask.ext.socketio import SocketIO,emit
+import json
 from threading import *
 import random
 import time
@@ -44,12 +45,13 @@ def test_connect():
 def scrape():
     tt = "https://kickass.to/search/"
     text = request.args.get("text")
-    print text
+    #print text
     scraper = kickassScraper.Scrape(tt+text)
-    print "here is right"
+    #print "here is right"
     out = scraper.scrape(scraper.link)
-    print "out is",out
-    return out
+    #print "out is",out
+    return json.dumps(out)
+
 class RandomThread(Thread):
     def __self__(self):
         super(RandomThread,self).__init__()
