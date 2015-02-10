@@ -8,25 +8,39 @@ import random
 import time
 import client
 import test
+from celery import Celery
+
+def make_celery(app):
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
+
 thread = Thread()
 thread_stop_event = Event()
 import kickassScraper
-
 import os
 app = Flask(__name__,static_url_path=os.getcwd()+"/static")
 app.config['SECRET_KEY'] = 'secret!'
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
+celery = make_celery(app)
 socketio = SocketIO(app)
 Client = client.Torrent_Client(socketio)
 @app.route("/")
 def index():
     #return redirect(url_for('static', filename='index.html'))
     return render_template("index.html")
-
-@app.route("/download")
-def download():
-    #global Client
-    magnet = request.args.get("mag")
-    def func(magnet,socketio):
+@celery.task()
+def func(magnet,socketio):
         ses = lt.session()
         ses.listen_on(6881, 6891)
         if not os.path.exists(os.getcwd()+'/downloads'):
@@ -61,10 +75,15 @@ def download():
                 print info
                 socketio.emit('newinfo',{'info':info},namespace='/test')
 
+@app.route("/download")
+def download():
+    #global Client
+    magnet = request.args.get("mag")
     #Client.add_torrent(magnet,"test")
     #func(magnet,socketio)
-    thread = MyThread(func,args=(magnet,socketio),name="test")
-    thread.start()
+    func(magnet,socketio)
+    #thread = MyThread(func,args=(magnet,socketio),name="test")
+    #thread.start()
     #thread.join()
     return "OK!"
 @socketio.on('connect',namespace='/test')
@@ -80,6 +99,7 @@ def test_connect():
 #@socketio.on('my event')
 #def test_message(message):
 #    emit('my response',{'data':'got it!'})
+
 
 
 @app.route("/scrape")
