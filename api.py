@@ -39,6 +39,7 @@ Client = client.Torrent_Client(socketio)
 def index():
     #return redirect(url_for('static', filename='index.html'))
     return render_template("index.html")
+
 @celery.task()
 def func(magnet,socketio):
         ses = lt.session()
@@ -81,7 +82,7 @@ def download():
     magnet = request.args.get("mag")
     #Client.add_torrent(magnet,"test")
     #func(magnet,socketio)
-    func(magnet,socketio)
+    res = func.delay(magnet,socketio)
     #thread = MyThread(func,args=(magnet,socketio),name="test")
     #thread.start()
     #thread.join()
