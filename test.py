@@ -36,3 +36,5 @@ def func(magnet):
                     s.num_peers, state_str[s.state], s.total_download/1000000)
             print info
         #time.sleep(5)
+
+func("magnet:?xt=urn:btih:F90A026EFC451B2C714991D7D4D60E88682490B3&dn=american+heist+2014+1080p+brrip+x264+yify&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce")
