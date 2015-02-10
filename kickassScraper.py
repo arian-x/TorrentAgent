@@ -25,9 +25,10 @@ class Scrape:
        # print names
         magnets = [i.get("href") for i in self.magnet_elems]
        # print magnets
-        self.name_mag_dict = {}
+        self.name_mag_dict = []
         for index,i in enumerate(names):
-            self.name_mag_dict[i] = magnets[index]
+            temp = {"name":i,"magnet":magnets[index]}
+            self.name_mag_dict.append(temp)
         return self.name_mag_dict
 
 
