@@ -1,6 +1,6 @@
 __author__ = 'arian'
 import libtorrent as lt
-import time
+#import time
 import os
 import threading
 def func(magnet,socketio):
