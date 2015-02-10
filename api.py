@@ -50,7 +50,7 @@ def scrape():
     #print "here is right"
     out = scraper.scrape(scraper.link)
     #print "out is",out
-    return "text"
+    return json.dumps(out)
 
 class RandomThread(Thread):
     def __self__(self):
