@@ -2,6 +2,7 @@ __author__ = 'arian'
 import libtorrent as lt
 import time
 import os
+import threading
 def func(magnet,socketio):
     ses = lt.session()
     ses.listen_on(6881, 6891)
@@ -38,7 +39,7 @@ def func(magnet,socketio):
             #socketio.emit('newinfo',{'info':info},namespace='/test')
         #time.sleep(5)
 
-class MyThread(Thread):
+class MyThread(threading.Thread):
     def __init__(self,func,args,name=''):
         Thread.__init__(self)
         self.name = name
