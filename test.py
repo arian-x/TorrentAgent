@@ -41,7 +41,7 @@ def func(magnet,socketio):
 
 class MyThread(threading.Thread):
     def __init__(self,func,args,name=''):
-        Thread.__init__(self)
+        threading.Thread.__init__(self)
         self.name = name
         self.func = func
         self.args = args
