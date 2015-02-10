@@ -55,6 +55,7 @@ class Torrent_Client:
                 parent.info =  name,": ",'%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s %.3f' % \
                     (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
                     s.num_peers, state_str[s.state], s.total_download/1000000)
+                print parent.info
                 self.socketio.emit('newinfo',{'info':parent.info},namespace='/test')
         #time.sleep(5)
 
